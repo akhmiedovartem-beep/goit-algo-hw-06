@@ -13,7 +13,7 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, value):
-        if len(value) == 10:
+        if len(value) == 10 and value.isdigit():
             super().__init__(value)
         else:
             raise ValueError("Phone number must be 10 digits")
@@ -55,11 +55,8 @@ class AddressBook(UserDict):
         self.data[record.name.value] = record
 
     def find(self, name):
-        for record in self.data.values():
-            if record.name.value == name:
-                return record
-        return None
-
+        return self.data.get(name)
+        
     def delete(self, name):
         record  = self.find(name)
         if record:
